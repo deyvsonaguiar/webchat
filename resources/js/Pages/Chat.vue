@@ -29,19 +29,14 @@
                         <!-- message -->
                         <div class="w-full p-6 flex flex-col overflow-y-auto">
                             <div
-                                v-for="message in messages" :key="message.id"
-                                class="w-full mb-3 text-right">
-                                <p class="inline-block p-2 rounded-md messageFromMe" style="max-width: 75%;">
+                                v-for="message in messages" :key="message.id" :class="(message.from == auth.user.id) ? 'text-right' : ''"
+                                class="w-full mb-3">
+                                <p
+                                    :class="(message.from == auth.user.id) ? 'messageFromMe' : 'messageToMe'"
+                                    class="inline-block p-2 rounded-md" style="max-width: 75%;">
                                     {{ message.content }}
                                 </p>
                                 <span class="block mt-1 text-xs text-gray-500">{{ message.created_at }}</span>
-                            </div>
-
-                            <div class="w-full mb-3">
-                                <p class="inline-block p-2 rounded-md messageToMe" style="max-width: 75%;">
-                                    Oi!
-                                </p>
-                                <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:51</span>
                             </div>
 
                         </div>
@@ -90,6 +85,9 @@
             axios.get('api/users').then(response => {
                 this.users = response.data.users
             })
-    }
+        },
+        props: {
+            auth: Object,
+        }
     }
 </script>
