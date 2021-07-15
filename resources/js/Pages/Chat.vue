@@ -12,7 +12,9 @@
                     <!--List User-->
                     <div class="w-3/12 bg-gray-200 bg-opacity-25 border-r border-gray-200 overflow-y-auto">
                         <ul>
-                            <li v-for="user in users" :key="user.id"
+                            <li
+                                v-for="user in users" :key="user.id"
+                                @click="() => {loadMessages(user.id)}"
                                 class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-gray-200 hover:cursor-pointer">
                                 <p class="flex items-center">
                                     {{ user.name }}
@@ -26,11 +28,13 @@
                     <div class="w-9/12 flex flex-col justify-between">
                         <!-- message -->
                         <div class="w-full p-6 flex flex-col overflow-y-auto">
-                            <div class="w-full mb-3 text-right">
+                            <div
+                                v-for="message in messages" :key="message.id"
+                                class="w-full mb-3 text-right">
                                 <p class="inline-block p-2 rounded-md messageFromMe" style="max-width: 75%;">
-                                    Olá!
+                                    {{ message.content }}
                                 </p>
-                                <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:50</span>
+                                <span class="block mt-1 text-xs text-gray-500">{{ message.created_at }}</span>
                             </div>
 
                             <div class="w-full mb-3">
@@ -39,32 +43,7 @@
                                 </p>
                                 <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:51</span>
                             </div>
-                            <div class="w-full mb-3 text-right">
-                                <p class="inline-block p-2 rounded-md messageFromMe" style="max-width: 75%;">
-                                    Olá!
-                                </p>
-                                <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:50</span>
-                            </div>
 
-                            <div class="w-full mb-3">
-                                <p class="inline-block p-2 rounded-md messageToMe" style="max-width: 75%;">
-                                    Oi!
-                                </p>
-                                <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:51</span>
-                            </div>
-                            <div class="w-full mb-3 text-right">
-                                <p class="inline-block p-2 rounded-md messageFromMe" style="max-width: 75%;">
-                                    Olá!
-                                </p>
-                                <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:50</span>
-                            </div>
-
-                            <div class="w-full mb-3">
-                                <p class="inline-block p-2 rounded-md messageToMe" style="max-width: 75%;">
-                                    Oi!
-                                </p>
-                                <span class="block mt-1 text-xs text-gray-500">15/07/2021 11:51</span>
-                            </div>
                         </div>
                         <!-- form -->
                         <div class="w-full bg-gray-200 bg-opacity-25 p-6 border-t border-gray-200">
@@ -93,7 +72,18 @@
         },
         data() {
             return {
-                users: []
+                users: [],
+                messages: []
+            }
+        },
+        methods: {
+            loadMessages: function(userId) {
+
+                axios.get(`api/messages/${userId}`).then(response => {
+                    this.messages = response.data.messages
+                    console.log(response)
+                })
+
             }
         },
         mounted() {
