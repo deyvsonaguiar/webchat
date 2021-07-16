@@ -42,7 +42,7 @@
 
                         </div>
                         <!-- form -->
-                        <div class="w-full bg-gray-200 bg-opacity-25 p-6 border-t border-gray-200">
+                        <div v-if="userActive" class="w-full bg-gray-200 bg-opacity-25 p-6 border-t border-gray-200">
                             <form>
                                 <div class="flex rounded-md overflow-hidden border border-gray-300">
                                     <input type="text" class="flex-1 px-4 py-2 text-sm focus:outline-none">
@@ -73,7 +73,7 @@
             return {
                 users: [],
                 messages: [],
-                userActive: {}
+                userActive: null
             }
         },
         methods: {
