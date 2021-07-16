@@ -36,7 +36,7 @@
                                     class="inline-block p-2 rounded-md" style="max-width: 75%;">
                                     {{ message.content }}
                                 </p>
-                                <span class="block mt-1 text-xs text-gray-500">{{ message.created_at }}</span>
+                                <span class="block mt-1 text-xs text-gray-500">{{ moment(message.created_at).format('MM/DD/YYYY hh:mm') }}</span>
                             </div>
 
                         </div>
@@ -59,7 +59,8 @@
 </template>
 
 <script>
-    import AppLayout from '@/Layouts/AppLayout'
+    import AppLayout from '@/Layouts/AppLayout';
+    import moment from 'moment';
 
     export default {
         components: {
@@ -79,6 +80,9 @@
                     console.log(response)
                 })
 
+            },
+            moment(arg) {
+             return moment(arg);
             }
         },
         mounted() {
@@ -88,6 +92,6 @@
         },
         props: {
             auth: Object,
-        }
+        },
     }
 </script>
