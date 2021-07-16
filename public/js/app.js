@@ -19257,16 +19257,19 @@ moment__WEBPACK_IMPORTED_MODULE_1___default().locale('pt-br');
   data: function data() {
     return {
       users: [],
-      messages: []
+      messages: [],
+      userActive: {}
     };
   },
   methods: {
     loadMessages: function loadMessages(userId) {
       var _this = this;
 
+      axios.get("api/users/".concat(userId)).then(function (response) {
+        _this.userActive = response.data.user;
+      });
       axios.get("api/messages/".concat(userId)).then(function (response) {
         _this.messages = response.data.messages;
-        console.log(response);
       });
     },
     moment: function moment(arg) {
@@ -23162,11 +23165,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           onClick: function onClick() {
             $options.loadMessages(user.id);
           },
-          "class": "p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-gray-200 hover:cursor-pointer"
+          "class": [$data.userActive && $data.userActive.id == user.id ? 'bg-gray-200 bg-opacity-50' : '', "p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-gray-200 hover:cursor-pointer"]
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.name) + " ", 1
         /* TEXT */
-        ), _hoisted_7])], 8
-        /* PROPS */
+        ), _hoisted_7])], 10
+        /* CLASS, PROPS */
         , ["onClick"]);
       }), 128
       /* KEYED_FRAGMENT */
