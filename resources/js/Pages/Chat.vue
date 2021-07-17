@@ -62,6 +62,7 @@
 <script>
     import AppLayout from '@/Layouts/AppLayout';
     import moment from 'moment';
+    import store from '../store';
 
     moment.locale('pt-br');
 
@@ -77,6 +78,13 @@
                 message: ''
             }
         },
+
+        computed: {
+            user() {
+                return store.state.user
+            }
+        },
+
         methods: {
             scrollToBottom: function() {
                 if(this.messages.length) {
@@ -105,7 +113,7 @@
                     'to' : this.userActive.id
                 }).then(response=> {
                     this.messages.push({
-                        'from' : '1',
+                        'from' : this.user.id,
                         'to' : this.userActive.id,
                         'content' : this.message,
                         'created_at' : new Date().toISOString(),
